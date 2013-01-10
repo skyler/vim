@@ -1,10 +1,10 @@
 " Vim syntax file
 " Language:     Python
-" Maintainer:	Dmitry Vasiliev <dima at hlabs dot org>
-" URL:		    https://github.com/hdima/vim-scripts/blob/master/syntax/python/python.vim
-" Last Change:	2012-02-11
-" Filenames:	*.py
-" Version:	    2.6.7
+" Maintainer:   Dmitry Vasiliev <dima at hlabs dot org>
+" URL:          https://github.com/hdima/vim-scripts/blob/master/syntax/python/python.vim
+" Last Change:  2012-02-11
+" Filenames:    *.py
+" Version:      2.6.7
 "
 " Based on python.vim (from Vim 6.1 distribution)
 " by Neil Schemenauer <nas at python dot ca>
@@ -110,6 +110,13 @@ if exists("python_highlight_all") && python_highlight_all != 0
   if !exists("python_highlight_doctests")
     let python_highlight_doctests = 1
   endif
+  " Indents highlight
+  if !exists("python_highlight_indents")
+    let python_highlight_indents = 1
+    if !exists("python_indents_style")
+        let python_indents_style = 1
+    endif
+  endif
 endif
 
 " Keywords
@@ -157,6 +164,22 @@ endif
 " Trailing space errors
 if exists("python_highlight_space_errors") && python_highlight_space_errors != 0
   syn match pythonSpaceError	"\s\+$" display
+endif
+
+" Indents highlight
+if exists("python_highlight_indents") && python_highlight_indents != 0
+  " whitespaces (pep8, guys!)
+  syn match   pythonHLSpace     /\(^\ \{4}\)\{1}/
+  for i in range(1, 30)
+    let pattern='/\(\(^\ \{'.i*4.'}\)\)\@<=\(\ \{4}\)\{1}/'
+    exec 'syn match pythonHLSpace'.i pattern
+  endfor
+  " tabs
+  syn match   pythonHLTab    /^\t\{1}/
+  for i in range(1, 30)
+    let pattern='/\(^\t\{'.i.'}\)\@<=\t\{1}/'
+    exec 'syn match pythonHLTab'.i pattern
+  endfor
 endif
 
 " Strings
@@ -367,6 +390,65 @@ if version >= 508 || !exists("did_python_syn_inits")
   HiLink pythonBuiltinFunc	Function
 
   HiLink pythonExClass	Structure
+
+  " Indents highlight
+  if exists("python_highlight_indents") && python_highlight_indents != 0
+    if (python_indents_style == 1)
+    " 5 colors
+    HiLink pythonHLTab       DiffChange
+    HiLink pythonHLTab1      Cursor
+    HiLink pythonHLTab2      StatusLine
+    HiLink pythonHLTab3      Todo
+    HiLink pythonHLTab4      Visual
+    HiLink pythonHLTab5      DiffChange
+    HiLink pythonHLTab6      Cursor
+    HiLink pythonHLTab7      StatusLine
+    HiLink pythonHLTab8      Todo
+    HiLink pythonHLTab9      Visual
+    HiLink pythonHLTab10     DiffChange
+
+    HiLink pythonHLStab      DiffChange
+    HiLink pythonHLStab1     Cursor
+    HiLink pythonHLStab2     StatusLine
+    HiLink pythonHLStab3     Todo
+    HiLink pythonHLStab4     Visual
+    HiLink pythonHLStab5     DiffChange
+    HiLink pythonHLStab6     Cursor
+    HiLink pythonHLStab7     StatusLine
+    HiLink pythonHLStab8     Todo
+    HiLink pythonHLStab9     Visual
+    HiLink pythonHLStab10    DiffChange
+
+    HiLink pythonHLSpace     DiffChange
+    HiLink pythonHLSpace1    Cursor
+    HiLink pythonHLSpace2    StatusLine
+    HiLink pythonHLSpace3    Todo
+    HiLink pythonHLSpace4    Visual
+    HiLink pythonHLSpace5    DiffChange
+    HiLink pythonHLSpace6    Cursor
+    HiLink pythonHLSpace7    StatusLine
+    HiLink pythonHLSpace8    Todo
+    HiLink pythonHLSpace9    Visual
+    HiLink pythonHLSpace10   DiffChange
+
+    elseif (python_indents_style == 2)
+    " 2 colors
+    HiLink pythonHLSpace     StatusLineNC
+    HiLink pythonHLTab       StatusLineNC
+    for i in range(1, 30)
+      if i % 2 == 0
+        exec 'HiLink pythonHLSpace' .i. ' StatusLineNC'
+        exec 'HiLink pythonHLTab' .i. ' StatusLineNC'
+      else
+        exec 'HiLink pythonHLSpace' .i. ' PmenuSel'
+        exec 'HiLink pythonHLTab' .i. ' PmenuSel'
+      endif
+    endfor
+
+    else
+      echoe "python-syntax: No such indentation style '". python_indents_style ."' - use 1 or 2"
+    endif
+  endif
 
   delcommand HiLink
 endif

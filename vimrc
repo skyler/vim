@@ -4,6 +4,7 @@ set nocompatible " be iMproved!
 filetype plugin indent on " plugin and indent are required for Pathogen
 syntax on
 colorscheme jellybeans
+set title
 
 " Pathogen
 call pathogen#infect()
@@ -16,6 +17,13 @@ set nowrap
 set formatoptions+=r
 set number
 set backspace=indent,eol,start
+set cursorline
+
+set pastetoggle=<F3>
+
+" Toggle line numbering
+set number
+nnoremap <F2> :set nonumber!<CR>
 
 " return to your last line when reopening a file
 set viminfo='10,\"100,:20,%,n~/.viminfo
