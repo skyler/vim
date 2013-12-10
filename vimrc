@@ -1,15 +1,18 @@
 " Skyler's .vimrc
 set nocompatible " be iMproved!
 
-filetype plugin indent on " plugin and indent are required for Pathogen
-syntax on
-colorscheme jellybeans
-set title
-
 " Pathogen
 call pathogen#infect()
 
-set smartindent
+filetype plugin indent on " plugin and indent are required for Pathogen
+syntax on
+set title
+
+colorscheme jellybeans
+"set background=dark
+"colorscheme github
+
+"set smartindent
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -39,3 +42,10 @@ match OverLength /\%>80v.\+/
 
 nnoremap <Bar> :call system('mac_copy', @0)<CR><ESC>
 
+" Toggle tag list
+nnoremap <F4> :TlistToggle<CR>
+
+"set spell spelllang=en_us
+
+let mapleader = ","
+let maplocalleader  = ","
