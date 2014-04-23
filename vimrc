@@ -4,6 +4,15 @@ set nocompatible " be iMproved!
 " Pathogen
 call pathogen#infect()
 
+"let g:syntastic_warning_symbol="⚠"
+"let g:syntastic_error_symbol="✗"
+"let g:syntastic_enable_signs=1
+"let g:syntastic_check_on_open=1
+
+" Syntastic + Pyflakes
+let g:syntastic_python_checkers=['pylint']
+"let g:syntastic_python_checkers=['pyflakes']
+
 filetype plugin indent on " plugin and indent are required for Pathogen
 syntax on
 set title
@@ -49,3 +58,11 @@ nnoremap <F4> :TlistToggle<CR>
 
 let mapleader = ","
 let maplocalleader  = ","
+
+"disable the built-in F1 help shortcut
+:nmap <F1> :echo<CR>
+:imap <F1> <C-o>:echo<CR>
+
+"nnoremap <F5>sign unplace *<CR>
+
+set ff=unix
