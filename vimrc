@@ -4,14 +4,16 @@ set nocompatible " be iMproved!
 " Pathogen
 call pathogen#infect()
 
+" Syntastic + Pyflakes
+"let g:syntastic_python_checkers=['pylint']  " <--- suuuuper slow
+let g:syntastic_python_checkers=['pyflakes']  " <----- this is good performance
+"let g:syntastic_python_checkers=['flake8']  " <--- doesn't seem to actually do anything
+let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 "let g:syntastic_warning_symbol="⚠"
 "let g:syntastic_error_symbol="✗"
-"let g:syntastic_enable_signs=1
-"let g:syntastic_check_on_open=1
-
-" Syntastic + Pyflakes
-let g:syntastic_python_checkers=['pylint']
-"let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_enable_signs=1
+let g:syntastic_check_on_open=1 
 
 filetype plugin indent on " plugin and indent are required for Pathogen
 syntax on
@@ -66,3 +68,7 @@ let maplocalleader  = ","
 "nnoremap <F5>sign unplace *<CR>
 
 set ff=unix
+
+set listchars=tab:»·
+set list
+hi SpecialKey ctermbg=red ctermfg=red guibg=red guifg=red
